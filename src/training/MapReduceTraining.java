@@ -65,8 +65,8 @@ public class MapReduceTraining extends Training {
         conf.setInputFormat(TextInputFormat.class);
         conf.setOutputFormat(TextOutputFormat.class);
 	
-        FileInputFormat.setInputPaths(conf, new Path("/data/mapreduce/input"));
-        FileOutputFormat.setOutputPath(conf, new Path("/data/mapreduce/output"));
+        FileInputFormat.setInputPaths(conf, new Path("/user/cloudera/wordcount/input"));
+        FileOutputFormat.setOutputPath(conf, new Path("/user/cloudera/wordcount/output"));
 	
         JobClient.runJob(conf);
     }
