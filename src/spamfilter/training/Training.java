@@ -8,16 +8,13 @@ package spamfilter.training;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.Scanner;
 import spamfilter.Cluster;
 import spamfilter.data.Ham;
 import spamfilter.data.Spam;
 import spamfilter.data.Email;
 import spamfilter.dictionary.Dictionary;
-import spamfilter.dictionary.Word;
 
 /**
  *
@@ -29,8 +26,6 @@ abstract public class Training {
      * @var int Number of clusters.
      */
     private static final int N = 20;
-    
-    private static final int DIM = 3;
 
     /**
      * @var Dictionary Dictionary of words.
@@ -43,6 +38,15 @@ abstract public class Training {
     private Cluster[] clusters;
 
     /**
+     * 
+     * @param dictionary 
+     */
+    public Training(Dictionary dictionary) {
+        // init dictionary
+        this.dictionary = dictionary;
+    }
+
+    /**
      * Process email data into email statistics - words count and special chars count
      * @param spam
      * @param ham
@@ -53,21 +57,15 @@ abstract public class Training {
     /**
      * Train data
      */
-    public void train() {
-        try {
-            // init dictionary
-            dictionary = new Dictionary();
-
-            //init clusters
-            File spamTrainingDirectory = new File("data/train/spam");
-            File hamTrainingDirectory = new File("data/train/ham"); 
-            Email[] data = execute(spamTrainingDirectory.listFiles(), hamTrainingDirectory.listFiles());
-            this.persist(data);
-            this.initClusters(data);
-            this.test(data);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+    public Cluster[] train() throws Exception {
+        //init clusters
+        File spamTrainingDirectory = new File("data/train/spam");
+        File hamTrainingDirectory = new File("data/train/ham"); 
+        Email[] data = execute(spamTrainingDirectory.listFiles(), hamTrainingDirectory.listFiles());
+        this.persist(data);
+        this.initClusters(data);
+        this.cluster(data);
+        return this.clusters;
     }
 
     /**
@@ -81,6 +79,12 @@ abstract public class Training {
         }
     }
 
+    /**
+     * Persist counting in a file
+     * @param data
+     * @throws FileNotFoundException
+     * @throws UnsupportedEncodingException 
+     */
     public void persist(Email[] data) throws FileNotFoundException, UnsupportedEncodingException {
         PrintWriter hamWriter = new PrintWriter("data/output/train/ham.txt", "UTF-8");
         PrintWriter spamWriter = new PrintWriter("data/output/train/spam.txt", "UTF-8");
@@ -98,7 +102,11 @@ abstract public class Training {
         spamWriter.close();
     }
 
-    public void test(Email[] data) {
+    /**
+     * Cluster data
+     * @param data 
+     */
+    public void cluster(Email[] data) {
         int count = 0;
         
     	// Running 100 iterations of the algorithm before terminating
@@ -138,6 +146,9 @@ abstract public class Training {
         return;
     }
 
+    /**
+     * Classify clusters as either spam or ham
+     */
     public void classifyClusters() {
         for (Cluster cluster: this.clusters) {
             cluster.classify();

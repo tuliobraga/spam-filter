@@ -6,6 +6,10 @@ import spamfilter.data.Email;
 import spamfilter.data.Ham;
 import spamfilter.data.Spam;
 
+/**
+ *
+ * @author tuliobraga
+ */
 public class Cluster {
 
     private static final int SPAM = 0;
@@ -70,6 +74,18 @@ public class Cluster {
         if(ratio > 0.5) {
             this.classification = SPAM;
         }
+    }
+
+    public int size() {
+        return this.points.size();
+    }
+
+    public boolean isSpam() {
+        return this.classification == SPAM ? true : false; 
+    }
+
+    public boolean isHam() {
+        return this.classification == HAM ? true : false; 
     }
     
     public void clearPoints() {

@@ -7,20 +7,20 @@
 package spamfilter.training;
 
 import java.io.File;
-import java.io.InputStream;
-import java.util.Scanner;
-import spamfilter.Cluster;
 import spamfilter.data.Ham;
 import spamfilter.data.Spam;
 import spamfilter.data.Email;
 import spamfilter.dictionary.Dictionary;
-import spamfilter.dictionary.Word;
 
 /**
  *
  * @author tuliobraga
  */
 public class SimpleTraining extends Training {
+
+    public SimpleTraining(Dictionary dictionary) {
+        super(dictionary);
+    }
 
     @Override
     public Email[] execute(File[] spam, File[] ham) throws Exception {

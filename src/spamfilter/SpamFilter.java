@@ -6,10 +6,9 @@
 
 package spamfilter;
 
-import spamfilter.training.Training;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Random;
+import java.io.FileNotFoundException;
+import spamfilter.dictionary.Dictionary;
+import spamfilter.test.Test;
 import spamfilter.training.SimpleTraining;
 
 /**
@@ -30,24 +29,23 @@ public class SpamFilter {
 
     public static void main(String[] args) {
         String command = args[0];
-        try { 
-            if(command.equals(COMMAND_TRAIN)) {
-                train();
-            } else if(command.equals(COMMAND_TEST)) {
-                execute();        
-            }
+        try {
+            Dictionary dictionary = new Dictionary();
+            Cluster[] clusters = train(dictionary);
+            execute(dictionary, clusters);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public static void train() {
-        SimpleTraining t = new SimpleTraining();
-        t.train();
+    public static Cluster[] train(Dictionary dictionary) throws Exception {
+        SimpleTraining t = new SimpleTraining(dictionary);
+        return t.train();
     }
 
-    public static void execute() {
-        
+    public static void execute(Dictionary dictionary, Cluster[] clusters) throws FileNotFoundException {
+        Test t = new Test(dictionary, clusters);
+        t.test();
     }
     
 }
