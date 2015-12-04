@@ -6,11 +6,11 @@
 
 package spamfilter;
 
-import training.Training;
+import spamfilter.training.Training;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
-import training.SimpleTraining;
+import spamfilter.training.SimpleTraining;
 
 /**
  *

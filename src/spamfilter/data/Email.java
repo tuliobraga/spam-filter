@@ -38,13 +38,11 @@ public class Email {
             }
         }
     }
-    
-    public int getWordsCount() {
-        return wordsCount;
-    }
 
-    public int getSpecialCharsCount() {
-        return specialCharsCount;
+    public Email(int numWords, int numSpecialChars) {
+        this.name = "centroid";
+        this.wordsCount = numWords;
+        this.specialCharsCount = numWords;
     }
 
     public double distanceTo(Email point) {
@@ -54,5 +52,17 @@ public class Email {
         
     	return Math.sqrt(similarities);
     }
-    
+
+    public int getWordsCount() {
+        return wordsCount;
+    }
+
+    public int getSpecialCharsCount() {
+        return specialCharsCount;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
 }

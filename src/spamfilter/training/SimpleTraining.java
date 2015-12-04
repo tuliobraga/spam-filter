@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package training;
+package spamfilter.training;
 
 import java.io.File;
 import java.io.InputStream;
@@ -28,7 +28,7 @@ public class SimpleTraining extends Training {
         int count = 0;
     	Email[] data = new Email[spam.length+ham.length];
         
-        for (File child : spam) {                    
+        for (File child : spam) {
             data[count] = new Spam(child, this.getDictionary());
             count++;
         }
