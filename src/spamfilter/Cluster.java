@@ -39,7 +39,7 @@ public class Cluster {
     /**
      * Calculate new centroids based on cluster points
      */
-    public void renewCentroids() {
+    public void renewCentroid() {
         // verify whether points were set
         if(this.points.isEmpty() == false) {
             int numWords = 0, numSpecialChars = 0;

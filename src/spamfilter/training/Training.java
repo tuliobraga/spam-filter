@@ -25,7 +25,7 @@ abstract public class Training {
     /**
      * @var int Number of clusters.
      */
-    private static final int N = 20;
+    private static final int N = 2;
 
     /**
      * @var Dictionary Dictionary of words.
@@ -114,14 +114,14 @@ abstract public class Training {
         	
             // Erase the current clusters for recalculation based on new centroids 
             for(Cluster c: this.clusters) {
-                c.renewCentroids();
+                c.renewCentroid();
                 c.clearPoints();
             }
             
             // Check all the data for the best match cluster
             double distance, bestSoFar;
             Cluster clusterMatched;
-            for(int i = 0; i<data.length; i++) {
+            for(int i = 0; i < data.length; i++) {
                 bestSoFar = 1000000;
 
                 // Verify distance from current email to each cluster centroids 
@@ -143,7 +143,6 @@ abstract public class Training {
 
         // Classify the clusters after iterations as either spam or ham
         classifyClusters();
-        return;
     }
 
     /**
