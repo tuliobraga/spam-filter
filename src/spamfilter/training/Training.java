@@ -8,12 +8,13 @@ package spamfilter.training;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import spamfilter.Cluster;
+import spamfilter.data.Email;
 import spamfilter.data.Ham;
 import spamfilter.data.Spam;
-import spamfilter.data.Email;
 import spamfilter.dictionary.Dictionary;
 
 /**
@@ -25,7 +26,7 @@ abstract public class Training {
     /**
      * @var int Number of clusters.
      */
-    private static final int N = 2;
+    private static final int N = 20;
 
     /**
      * @var Dictionary Dictionary of words.
@@ -58,10 +59,22 @@ abstract public class Training {
      * Train data
      */
     public Cluster[] train() throws Exception {
+        // Filtrando .DS_Store
+        FilenameFilter fileNameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+               if(name.equals(".DS_Store")) {
+                  return false;
+               }
+
+               return true;
+            }
+         };
+        
         //init clusters
         File spamTrainingDirectory = new File("data/train/spam");
         File hamTrainingDirectory = new File("data/train/ham"); 
-        Email[] data = execute(spamTrainingDirectory.listFiles(), hamTrainingDirectory.listFiles());
+        Email[] data = execute(spamTrainingDirectory.listFiles(fileNameFilter), hamTrainingDirectory.listFiles(fileNameFilter));
         this.persist(data);
         this.initClusters(data);
         this.cluster(data);
@@ -110,32 +123,35 @@ abstract public class Training {
         int count = 0;
         
     	// Running 100 iterations of the algorithm before terminating
-        while(count < 100) {
+        while(count < 1000) {
         	
             // Erase the current clusters for recalculation based on new centroids 
             for(Cluster c: this.clusters) {
-                c.renewCentroid();
                 c.clearPoints();
             }
             
             // Check all the data for the best match cluster
-            double distance, bestSoFar;
+            double distance, topLimit;
             Cluster clusterMatched;
             for(int i = 0; i < data.length; i++) {
-                bestSoFar = 1000000;
+                topLimit = 1000000;
 
                 // Verify distance from current email to each cluster centroids 
                 // to find a best match. Then, add new point (email) to the matched cluster
                 clusterMatched = this.clusters[0];
                 for(Cluster cluster: this.clusters) {
                     distance = cluster.getCentroid().distanceTo(data[i]);
-                    if(distance < bestSoFar) {
-                        bestSoFar = distance;
+                    if(distance < topLimit) {
+                        topLimit = distance;
                         clusterMatched = cluster;
                     }
                 }
 
                 clusterMatched.addPoint(data[i]);
+            }
+            
+            for(Cluster c: this.clusters) {
+                c.renewCentroid();
             }
             
             count++;

@@ -1,4 +1,3 @@
-.DS_Store,1,79488
 0001.1999-12-10.farmer.ham.txt,4,1
 0004.1999-12-14.farmer.ham.txt,63,171
 0009.1999-12-14.farmer.ham.txt,29,18

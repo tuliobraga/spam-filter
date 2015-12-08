@@ -19,7 +19,7 @@ import spamfilter.dictionary.Word;
  * @author tuliobraga
  */
 public class Email {
-    
+
     private int wordsCount = 0;
     private int specialCharsCount = 0;
     private String name;
@@ -42,14 +42,14 @@ public class Email {
     public Email(int numWords, int numSpecialChars) {
         this.name = "centroid";
         this.wordsCount = numWords;
-        this.specialCharsCount = numWords;
+        this.specialCharsCount = numSpecialChars;
     }
 
     public double distanceTo(Email point) {
         double similarities = 
               Math.pow(this.getWordsCount()-point.getWordsCount(), 2) 
             + Math.pow(this.getSpecialCharsCount()-point.getSpecialCharsCount(), 2);
-        
+
     	return Math.sqrt(similarities);
     }
 
