@@ -123,7 +123,7 @@ abstract public class Training {
         int count = 0;
         
     	// Running 100 iterations of the algorithm before terminating
-        while(count < 1000) {
+        while(count < 100) {
         	
             // Erase the current clusters for recalculation based on new centroids 
             for(Cluster c: this.clusters) {

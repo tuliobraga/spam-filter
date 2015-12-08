@@ -8,6 +8,7 @@ package spamfilter.test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import spamfilter.Cluster;
 import spamfilter.data.Email;
 import spamfilter.data.Ham;
@@ -44,7 +45,7 @@ public class Test {
     /**
      * Train data
      */
-    public void test() throws FileNotFoundException {
+    public void test() throws FileNotFoundException, IOException {
         int totalClassifiedAsHam = 0, totalClassifiedAsSpam = 0;
             
         // load test data

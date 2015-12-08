@@ -8,6 +8,7 @@ package spamfilter.data;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import spamfilter.dictionary.Dictionary;
 
 /**
@@ -16,7 +17,7 @@ import spamfilter.dictionary.Dictionary;
  */
 public class Ham extends Email {
     
-    public Ham(File textFile, Dictionary dictionary) throws FileNotFoundException {
+    public Ham(File textFile, Dictionary dictionary) throws FileNotFoundException, IOException {
         super(textFile, dictionary);
     }
     

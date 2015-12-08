@@ -42,14 +42,19 @@ public class Cluster {
     public void renewCentroid() {
         // verify whether points were set
         if(this.points.isEmpty() == false) {
-            int numWords = 0, numSpecialChars = 0;
+            int numWords = 0, numSpecialChars = 0, numAbnormalChars = 0, wordsLineRatio = 0;
             int clusterSize = this.points.size();
             for(Email e: this.points) {
                 numWords += e.getWordsCount();
                 numSpecialChars += e.getSpecialCharsCount();
+                numAbnormalChars += e.getAbnormalCharsCount();
             }
 
-            this.centroid = new Email(numWords/clusterSize, numSpecialChars/clusterSize);
+            this.centroid = new Email(
+                    numWords/clusterSize, 
+                    numSpecialChars/clusterSize,
+                    numAbnormalChars/clusterSize
+            );
         }
     }
 
