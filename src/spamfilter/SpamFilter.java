@@ -7,6 +7,7 @@
 package spamfilter;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import spamfilter.dictionary.Dictionary;
 import spamfilter.test.Test;
 import spamfilter.training.SimpleTraining;
@@ -43,7 +44,7 @@ public class SpamFilter {
         return t.train();
     }
 
-    public static void execute(Dictionary dictionary, Cluster[] clusters) throws FileNotFoundException {
+    public static void execute(Dictionary dictionary, Cluster[] clusters) throws FileNotFoundException, IOException {
         Test t = new Test(dictionary, clusters);
         t.test();
     }
