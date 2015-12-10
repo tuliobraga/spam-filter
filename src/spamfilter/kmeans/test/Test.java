@@ -92,7 +92,7 @@ public class Test {
         // printing the results.
         System.out.println();
         System.out.println("***** K-MEANS REPORT *****");
-System.out.println("Total emails evaluated: "+(totalEmails));
+        System.out.println("Total emails evaluated: "+(totalEmails));
         System.out.println("-");
         System.out.println("Total of Ham: "+(totalHam)+"("+String.format("%.2f", hamPercentage)+"%)");
         System.out.println("Total classified Ham: "+(totalClassifiedAsHam)+"("+String.format("%.2f", hamAccuracy)+"%)");
