@@ -26,7 +26,7 @@ abstract public class Training {
     /**
      * @var int Number of clusters.
      */
-    private static final int N = 50;
+    private static final int N = 20;
 
     /**
      * @var Dictionary Dictionary of words.
@@ -123,7 +123,7 @@ abstract public class Training {
         int count = 0;
         
     	// Running 100 iterations of the algorithm before terminating
-        while(count < 1000) {
+        while(count < 100) {
         	
             // Erase the current clusters for recalculation based on new centroids 
             for(Cluster c: this.clusters) {
