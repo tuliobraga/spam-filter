@@ -27,7 +27,7 @@ public class SpamFilter {
      */
     public static void main(String[] args) {
         try {
-            executeNaiveBayes();
+            //executeNaiveBayes();
             executeKmeans();
         } catch (Exception ex) {
             ex.printStackTrace();

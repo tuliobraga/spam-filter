@@ -73,7 +73,7 @@ public class Test {
         
         // printing the results.
         System.out.println();
-        System.out.println("***** NAÏVE BAYES REPORT *****");
+        System.out.println("------ NAÏVE BAYES REPORT ------");
         System.out.println("Total emails evaluated: "+(totalEmails));
         System.out.println("-");
         System.out.println("Total of Ham: "+(totalHam)+"("+String.format("%.2f", hamPercentage)+"%)");

@@ -25,6 +25,9 @@ public class Probability extends HashMap<String, Double>{
         this.generalWordCounter = generalWordCounter;
         double probability;
         for(String s: wordCounter.keySet()) {
+            // wordCounter.get(s) = Total of term/string occurrence
+            // wordCounter.getTotalStrings() = Total of term/string in the dir of hams or dir of spams - counting repeated
+            // generalWordCounter.getNumDifferentStrings() = Total of terms/strings distintas somando spams e hams
             probability = Math.log10(
                 (double)(1 + wordCounter.get(s)) / (double)(1 + wordCounter.getTotalStrings()+ generalWordCounter.getNumDifferentStrings())
             );
