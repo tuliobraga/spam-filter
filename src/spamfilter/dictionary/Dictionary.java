@@ -21,7 +21,7 @@ public class Dictionary extends HashMap<Integer, String> {
         super();
 
         try {
-            File words = new File("data/dictionary.txt");
+            File words = new File("dataset/dictionary.txt");
             Scanner scanner = new Scanner(new FileInputStream(words));
             while(scanner.hasNext()) {
                 String word = scanner.next();

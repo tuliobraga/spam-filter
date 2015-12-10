@@ -17,9 +17,13 @@ public class Word {
     public static int countSpecialChars(String input) {
     	int result = 0;
     	for(int i = 0; i < input.length(); i++) {
-    	    int charAsNum = (int)input.charAt(i);
-    	    if( charAsNum < 48 || (charAsNum > 57 && charAsNum < 65) || (charAsNum > 90 && charAsNum < 97)
-    	    	    || charAsNum > 122)
+    	    int charCode = (int) input.charAt(i);
+    	    if( 
+                (charCode > 90 && charCode < 97) 
+                || (charCode > 57 && charCode < 65) 
+                || charCode < 48 
+                || charCode > 122
+            )
     		result++;
     	}
 

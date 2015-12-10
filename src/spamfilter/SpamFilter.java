@@ -9,8 +9,10 @@ package spamfilter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import spamfilter.dictionary.Dictionary;
-import spamfilter.test.Test;
-import spamfilter.training.SimpleTraining;
+import spamfilter.kmeans.Cluster;
+import spamfilter.kmeans.test.Test;
+import spamfilter.kmeans.training.SimpleTraining;
+import spamfilter.naivebayes.Training;
 
 /**
  *
@@ -19,34 +21,44 @@ import spamfilter.training.SimpleTraining;
 public class SpamFilter {
 
     /**
-     * Command list
+     * Main.
      * 
-     * train - train data based on static data
-     * test - test spam filter based on static data
-     * 
+     * @param args 
      */
-    public static final String COMMAND_TRAIN = "train";
-    public static final String COMMAND_TEST = "test";
-
     public static void main(String[] args) {
-        String command = args[0];
         try {
             Dictionary dictionary = new Dictionary();
-            Cluster[] clusters = train(dictionary);
-            execute(dictionary, clusters);
+            //executeKmeans(dictionary);
+            executeNaiveBayes();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public static Cluster[] train(Dictionary dictionary) throws Exception {
-        SimpleTraining t = new SimpleTraining(dictionary);
-        return t.train();
+    /**
+     * Execute kmeans algorithm
+     * 
+     * @param dictionary
+     * @throws Exception 
+     */
+    public static void executeKmeans(Dictionary dictionary) throws Exception {
+        SimpleTraining trainning = new SimpleTraining(dictionary);
+        Cluster[] clusters = trainning.train();
+        Test testing = new Test(dictionary, clusters);
+        testing.test();
     }
 
-    public static void execute(Dictionary dictionary, Cluster[] clusters) throws FileNotFoundException, IOException {
-        Test t = new Test(dictionary, clusters);
-        t.test();
+    /**
+     * Execute naive bayes algorithm
+     * 
+     * @param dictionary
+     * @throws Exception 
+     */
+    public static void executeNaiveBayes() throws Exception {
+        Training tr = new Training();
+        tr.train();
+        spamfilter.naivebayes.Test te = new spamfilter.naivebayes.Test();
+        te.test(tr);
     }
     
 }
