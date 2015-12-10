@@ -27,8 +27,7 @@ public class SpamFilter {
      */
     public static void main(String[] args) {
         try {
-            Dictionary dictionary = new Dictionary();
-            //executeKmeans(dictionary);
+            executeKmeans();
             executeNaiveBayes();
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -41,11 +40,16 @@ public class SpamFilter {
      * @param dictionary
      * @throws Exception 
      */
-    public static void executeKmeans(Dictionary dictionary) throws Exception {
+    public static void executeKmeans() throws Exception {
+        Dictionary dictionary = new Dictionary();
         SimpleTraining trainning = new SimpleTraining(dictionary);
         Cluster[] clusters = trainning.train();
+
         Test testing = new Test(dictionary, clusters);
-        testing.test();
+        testing.test("dataset/input/test/spam","dataset/input/test/ham");
+        
+        Test testing2 = new Test(dictionary, clusters);
+        testing2.test("dataset/input/test-2/spam","dataset/input/test-2/ham");
     }
 
     /**
@@ -58,7 +62,10 @@ public class SpamFilter {
         Training tr = new Training();
         tr.train();
         spamfilter.naivebayes.Test te = new spamfilter.naivebayes.Test();
-        te.test(tr);
+        te.test(tr, "dataset/input/test/spam", "dataset/input/test/ham");
+
+        spamfilter.naivebayes.Test te2 = new spamfilter.naivebayes.Test();
+        te2.test(tr, "dataset/input/test-2/spam", "dataset/input/test-2/ham");
     }
     
 }

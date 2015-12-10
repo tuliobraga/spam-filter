@@ -19,7 +19,8 @@ import java.util.Scanner;
  */
 public class StringCounter extends HashMap<String, Double>{
 
-    private int count = 0;
+    private int totalStrings = 0;
+    private int numDifferentStrings = 0;
     private static final String STRIP_CHARS = "!#%^&*()!:.{}[]><?/*~@$\"\'+,-;=\\_`£©·";
 
     /**
@@ -28,22 +29,20 @@ public class StringCounter extends HashMap<String, Double>{
      * @throws FileNotFoundException 
      */
     public void populate(File[] files) throws FileNotFoundException {
-        for(File file: files){
-
-            InputStream stream = new FileInputStream(file);
-            Scanner scanner = new Scanner(stream);
-            while(scanner.hasNext()) {
-                String input = scanner.next().trim();
-
-                if(input.isEmpty()) continue;
-                // Filtering special chars
-                if( input.length() == 1) {
-                    if(STRIP_CHARS.contains(input)) continue;
+        // for each email in the directory.
+	for(File file: files){
+            Scanner scanner = new Scanner(file);		
+            while(scanner.hasNext()){			
+                // read a line and split it in terms and add the terms in the vocabulary.
+                String line = scanner.nextLine().toLowerCase().trim();	
+                for(String input : line.split(" ")){
+                    if(input != null && !input.isEmpty() && !STRIP_CHARS.contains(input)){
+                        this.increment(input);
+                    }
                 }
-                
-                this.increment(input);
-            }
-        }
+            }	
+            scanner.close();
+	}
     }
 
     /**
@@ -57,9 +56,10 @@ public class StringCounter extends HashMap<String, Double>{
             this.replace(input, value);
         } else {
             this.put(input, 1.0);
+            this.numDifferentStrings++;
         }
 
-        this.count++;
+        this.totalStrings++;
     }
 
     /**
@@ -67,7 +67,11 @@ public class StringCounter extends HashMap<String, Double>{
      * @return 
      */
     public int getTotalStrings() {
-        return this.count;
+        return this.totalStrings;
+    }
+
+    public int getNumDifferentStrings() {
+        return numDifferentStrings;
     }
 
 }

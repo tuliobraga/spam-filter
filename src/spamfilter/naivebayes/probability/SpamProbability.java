@@ -14,8 +14,8 @@ import spamfilter.naivebayes.vocabulary.StringCounter;
  */
 public class SpamProbability extends Probability {
 
-    public SpamProbability(StringCounter wordCounter, int totalWords) {
-        super(wordCounter, totalWords);
+    public SpamProbability(StringCounter wordCounter, StringCounter generalWordCounter) {
+        super(wordCounter, generalWordCounter);
     }
     
 }

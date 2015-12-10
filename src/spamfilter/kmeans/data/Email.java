@@ -27,22 +27,25 @@ public class Email {
     private int specialCharsCount = 0;
     private int abnormalCharsCount = 0;
     private String name;
+    private static final String STRIP_CHARS = "!#%^&*()!:.{}[]><?/*~@$\"\'+,-;=\\_`£©·";
 
     public Email(File textFile, Dictionary dictionary) throws FileNotFoundException, IOException {
         this.name = textFile.getName();
-        InputStream stream = new FileInputStream(textFile);
-        
-        try (Scanner scanner = new Scanner(stream)) {
-            while(scanner.hasNext()) {
-                String input = scanner.next();
-                if(dictionary.wordExists(input.hashCode())) {
+        //InputStream stream = new FileInputStream(textFile);
+        Scanner scanner = new Scanner(textFile);		
+        while(scanner.hasNext()){			
+            // read a line and split it in terms and add the terms in the vocabulary.
+            String line = scanner.nextLine().toLowerCase().trim();	
+            for(String input : line.split(" ")){
+                if(input != null && !input.isEmpty()){
                     this.wordsCount++;
                 }
 
                 this.specialCharsCount += Word.countSpecialChars(input);
                 this.abnormalCharsCount += Word.countAbnormalChars(input);
             }
-        }
+        }	
+        scanner.close();
     }
 
     public Email(int numWords, int numSpecialChars, int abnormalCharsCount) {

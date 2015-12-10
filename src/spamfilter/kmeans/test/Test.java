@@ -45,15 +45,15 @@ public class Test {
     /**
      * Train data
      */
-    public void test() throws FileNotFoundException, IOException {
+    public void test(String spamFileName, String hamFileName) throws FileNotFoundException, IOException {
         int totalClassifiedAsHam = 0, totalClassifiedAsSpam = 0;
             
         // load test data
-        File spamDirectory = new File("dataset/input/test/spam");
+        File spamDirectory = new File(spamFileName);
         File[] spamFiles = spamDirectory.listFiles();
         int totalSpam = spamFiles.length;
 
-        File hamDirectory = new File("dataset/input/test/ham"); 
+        File hamDirectory = new File(hamFileName); 
         File[] hamFiles = hamDirectory.listFiles();
         int totalHam = hamFiles.length;
 

@@ -14,8 +14,8 @@ import spamfilter.naivebayes.vocabulary.StringCounter;
  */
 public class HamProbability extends Probability {
 
-    public HamProbability(StringCounter wordCounter, int totalWords) {
-        super(wordCounter, totalWords);
+    public HamProbability(StringCounter wordCounter, StringCounter generalWordCounter) {
+        super(wordCounter, generalWordCounter);
     }
     
 }

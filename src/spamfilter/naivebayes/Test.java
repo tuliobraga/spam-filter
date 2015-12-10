@@ -8,8 +8,7 @@ package spamfilter.naivebayes;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
-import spamfilter.naivebayes.Training;
+import java.io.FilenameFilter;
 
 /**
  *
@@ -19,13 +18,25 @@ public class Test {
     
     private Training training;
  
-    public void test(Training training) throws FileNotFoundException, Exception{
+    public void test(Training training, String spamTextFile, String hamTextFile) throws FileNotFoundException, Exception{
+        // Filter .DS_Store file
+        FilenameFilter fileNameFilter = new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+               if(name.equals(".DS_Store")) {
+                  return false;
+               }
+
+               return true;
+            }
+        };
+
         this.training = training;
         int totalClassifiedAsSpam = 0, totalClassifiedAsHam = 0;
         
         // load test data
-        File spamDirectory = new File("dataset/input/test/spam");
-        File[] spamFiles = spamDirectory.listFiles();
+        File spamDirectory = new File(spamTextFile);
+        File[] spamFiles = spamDirectory.listFiles(fileNameFilter);
         int totalSpam = spamFiles.length;
         for (File spamFile: spamFiles) {
             if(this.isSpam(spamFile)) {
@@ -33,8 +44,8 @@ public class Test {
             }
         }
 
-        File hamDirectory = new File("dataset/input/test/ham"); 
-        File[] hamFiles = hamDirectory.listFiles();
+        File hamDirectory = new File(hamTextFile); 
+        File[] hamFiles = hamDirectory.listFiles(fileNameFilter);
         int totalHam = hamFiles.length;
         for (File hamFile: hamFiles) {
             if(this.isHam(hamFile)) {

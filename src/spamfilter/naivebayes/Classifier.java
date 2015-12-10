@@ -33,24 +33,21 @@ public class Classifier {
     }
     
     public void exec() throws FileNotFoundException, Exception {		
-	// reading the file.
-        InputStream stream = new FileInputStream(this.file);
-        Scanner scanner = new Scanner(stream);
-        while(scanner.hasNext()) {
-            String input = scanner.next().trim();
-            
-            if(input.isEmpty()) continue;
-            // Filtering special chars
-            if( input.length() == 1) {
-                if(STRIP_CHARS.contains(input)) continue;
+        Scanner scanner = new Scanner(file);
+        // for each file, read line and split into valid words
+        while(scanner.hasNext()){			
+            String line = scanner.nextLine().toLowerCase().trim();	
+            for(String input : line.split(" ")){
+                if(input != null && !input.isEmpty()  && !STRIP_CHARS.contains(input)){
+                    this.incrementProbability(input);
+                }
             }
+        }	
+        scanner.close();	
 
-            this.incrementProbability(input);
-        }
-        scanner.close();
-	
-	// adding the prior probabilities.
+	// sum the general probability spam/totalItems
 	this.finalSpProbability += this.training.getSpamClassProbability();
+        // sum the general probability ham/totalItems
 	this.finalHpProbability += this.training.getHamClassProbability();
     }
 
@@ -58,7 +55,7 @@ public class Classifier {
         SpamProbability sp = this.training.getSpamProbability();
         HamProbability hp = this.training.getHamProbability();
 
-        int totalTerms = sp.getTotalWords()+hp.getTotalWords();
+        int totalTerms = sp.getNumDifferentStrings()+hp.getNumDifferentStrings();
         int numSpamTerms = sp.entrySet().size();
         int numHamTerms = hp.entrySet().size();
 
@@ -66,17 +63,26 @@ public class Classifier {
             this.finalSpProbability += sp.get(input);
         } else {
             this.finalSpProbability += Math.log10(
-                (double)1/(double)(1+totalTerms+numSpamTerms)
+                (double)1/(double)(
+                    1
+                    +sp.getWordCounter().getTotalStrings()
+                    +sp.getGeneralWordCounter().getNumDifferentStrings()
+                )
             );
         }
-        
+
         if(hp.containsKey(input)) {
             this.finalHpProbability += hp.get(input);
         } else {
             this.finalHpProbability += Math.log10(
-                (double)1/(double)(1+totalTerms+numHamTerms)
-            );    
-        }		
+                (double)1/(double)(
+                    1
+                    +hp.getWordCounter().getTotalStrings()
+                    +hp.getGeneralWordCounter().getNumDifferentStrings()
+                )
+            );
+        }
+        
     }
 
     public double getFinalSpProbability() {

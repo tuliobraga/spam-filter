@@ -10,10 +10,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.util.Map;
+import java.util.Scanner;
 import spamfilter.naivebayes.probability.HamProbability;
 import spamfilter.naivebayes.probability.SpamProbability;
 import spamfilter.naivebayes.vocabulary.HamStringCounter;
 import spamfilter.naivebayes.vocabulary.SpamStringCounter;
+import spamfilter.naivebayes.vocabulary.StringCounter;
 
 /**
  *
@@ -53,9 +55,12 @@ public class Training {
         HamStringCounter hamStringCounter = new HamStringCounter();
         hamStringCounter.populate(hamFiles);
         
-        int totalWords = spamStringCounter.getTotalStrings() + hamStringCounter.getTotalStrings();
-        this.spamProbability = new SpamProbability(spamStringCounter, totalWords);
-        this.hamProbability = new HamProbability(hamStringCounter, totalWords);
+        StringCounter generalCounter = new StringCounter();
+        generalCounter.populate(hamFiles);
+        generalCounter.populate(spamFiles);
+
+        this.spamProbability = new SpamProbability(spamStringCounter, generalCounter);
+        this.hamProbability = new HamProbability(hamStringCounter, generalCounter);
         
         double stepSpam = (double)(spamFiles.length)/(double)(spamFiles.length+hamFiles.length);
         this.spamClassProbability = Math.log10(stepSpam);
