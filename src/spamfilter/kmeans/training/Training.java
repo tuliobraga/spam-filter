@@ -123,7 +123,7 @@ abstract public class Training {
         int count = 0;
         
     	// Running 100 iterations of the algorithm before terminating
-        while(count < 1000) {
+        while(count < 100) {
         	
             // Erase the current clusters for recalculation based on new centroids 
             for(Cluster c: this.clusters) {
@@ -134,7 +134,7 @@ abstract public class Training {
             double distance, topLimit;
             Cluster clusterMatched;
             for(int i = 0; i < data.length; i++) {
-                topLimit = 1000000;
+                topLimit = 10000000;
 
                 // Verify distance from current email to each cluster centroids 
                 // to find a best match. Then, add new point (email) to the matched cluster

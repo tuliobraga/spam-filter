@@ -92,13 +92,13 @@ public class Test {
         // printing the results.
         System.out.println();
         System.out.println("***** K-MEANS REPORT *****");
-        System.out.println("Total emails evaluated: "+(totalEmails));
+System.out.println("Total emails evaluated: "+(totalEmails));
         System.out.println("-");
-        System.out.println("Total of Ham: "+(totalHam)+"("+hamPercentage+"%)");
-        System.out.println("Total classified Ham: "+(totalClassifiedAsHam)+"("+hamAccuracy+"%)");
+        System.out.println("Total of Ham: "+(totalHam)+"("+String.format("%.2f", hamPercentage)+"%)");
+        System.out.println("Total classified Ham: "+(totalClassifiedAsHam)+"("+String.format("%.2f", hamAccuracy)+"%)");
         System.out.println("-");
         System.out.println("Total of Spam: "+(totalSpam)+"("+spamPercentage+"%)");
-        System.out.println("Total classified Spam: "+(totalClassifiedAsSpam)+"("+spamAccuracy+"%)");
+        System.out.println("Total classified Spam: "+(totalClassifiedAsSpam)+"("+String.format("%.2f", spamAccuracy)+"%)");
     }
 
     /*
